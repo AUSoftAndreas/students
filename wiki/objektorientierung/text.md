@@ -734,7 +734,7 @@ allesamt berechnet. Wenn man sich die Berechnungsroutine anguckt, dann sieht man
 dass auch hier die Settings des Users einfließen, denn in diesen steht ja, 
 was wir zum Beispiel für eine Stunde Fahrtzeit berechnen müssen.
 
-++ Zwischenfazit
+## Zwischenfazit
 
 Ihr müsst nicht auf Anhieb jedes Wort verstanden haben. Weiter geht es bald 
 mit weiteren Themen zur OOP.
@@ -742,3 +742,71 @@ mit weiteren Themen zur OOP.
 Ihr solltet aber nach dem sorgfältigen Durcharbeiten dieser 
 Lektion wissen, was eine Klasse ist und einfache Klassen sogar schon selbst 
 erstellen können.
+
+## Übung
+
+Zieht Euch das Repository https://github.com/AUSoftAndreas/oop1.git (bzw. über 
+VSCode geht das ja auch ohne die komplette URL). Enthalten sind zwei interessante 
+Dateien:
+
+- lib/person.dart
+- test/person_test.dart
+
+Die Datei person.dart ist recht leer, bis auf ein paar Formatierungen. Die Datei 
+person_test.dart ist recht voll, aber voller Fehler. Eure Aufgabe ist es nun, 
+in person.dart eine Klasse Person derart zu konstruieren, dass person_test.dart 
+keinerlei rote Stellen mehr aufweist, denn person_test.dart ist eigentlich 
+voll funktionsfähig. Nur person.dart ist halt unvollständig.
+
+### Ausgangssituation
+*Der leicht verrückte Programmierer P will seinen Alltag erleichtern, indem er 
+bei seinen Bekannten vermerkt, wie häufig sie ihn schon enttäuschten. Sein 
+neuestes Programm soll ihm die Arbeit dabei erleichtern.*
+
+Die Klasse Person ist nach den folgenden Regeln zu erstellen:
+- Jede Person hat folgende Eigenschaften:
+  - vorname: Der Vorname der Person. Dieser soll von außen lesbar sein, aber 
+  nicht veränderbar (=final), also wird ausschließlich über den Konstruktor 
+  erstellt. Jede Person hat einen Vornamen und daher kann 
+  hier nie der Wert null entstehen.
+  - nachname: ebenso
+  - spitzname: Dieser kann sich im Laufe der Zeit ändern und sollte daher 
+  immer veränderbar sein. Wenn P gerade kein Spitzname auf der Zunge liegt für 
+  eine Person, dann ist der Spitzname null.
+  - geburtstag: Dieser ist immer von Anfang an bekannt, weswegen er analog zu 
+  vorname und nachname abgehandelt wird.
+  - enttaeuschungen: Die Anzahl der Enttäuschungen, die P schon seitens der 
+  Person erhalten hat.
+  - letzteEnttaeuschung: Der Zeitpunkt der letzten Enttäuschung.
+
+  Folgende Programmlogik schwebt P vor:
+  - Die Werte "vorname", "nachname", "spitzname" (optional), "geburtstag" (optional) 
+  können per Konstruktor gesetzt werden.
+  - Eine Methode namens neueEnttaeuschung() wird aufgerufen, wann immer P von der 
+  Person enttäuscht wird. Diese setzt die Nummer der Enttäuschungen um eines hoch
+  - Per neueEnttaeuschungZuruecknehmen() kann P die letzte Enttäuschung 
+  zurücknehmen, wenn es noch der Tag dieser zurückzunehmenden Enttäuschung, wobei 
+  er das auch nur einmal pro Tag machen kann, er kann also keine zwei 
+  Ettäuschungen zurück geben.
+  - Die Funktion neueEnttaeuschungZuruecknehmen() gibt den Wert true an das 
+  aufrufende Objekt zurück, wenn die Rücknahme geklappt hat.
+
+  Das, was Ihr in person_test.dart seht, ist ein sogenannter Unit Test. Wir 
+  definieren die Tests, die *eine Klasse* betreffen.
+
+  Am Ende sollte weder in person.dart als auch in person_test.dart kein Inhalt 
+  mehr rot oder blau markiert werden von VSCode. Nach und nach sollten aber 
+  alle Tests des Unit Test erfolgreich durchlaufen werden können.
+
+  Testing ist ein wichtiger Bestandteil jeder Entwicklung und zudem recht einfach 
+  in VSCode. Ihr geht in den nachfolgend dargestellten Bereich und findet dort 
+  die Schaltfläche "Run all tests".... Wenn alles klappt, gibt es in der 
+  Debug-Konsole keinerlei Fehlermeldungen, sondern nur Erfolgsmeldungen.
+
+![](https://raw.githubusercontent.com/AUSoftAndreas/students/dev/wiki/objektorientierung/testing_01.PNG)
+
+  Eines noch: Mir ist klar, dass diese Aufgabe am oberen Limit ist für die 
+  meisten bzw. eigentlich darüber hinaus. Daher nutzt die Chance, Euch mit mir 
+  und mit Euren Klassenkameraden zu besprechen.
+
+  **Und macht bitte erst dann mit Teil 2 weiter, wenn Ihr das absolviert habt.**
