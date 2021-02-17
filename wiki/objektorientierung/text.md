@@ -1,5 +1,3 @@
-# Objektorientierte Programmierung
-
 *Vorweg sei gesagt, dass ich lange mit der Form gerungen habe, in der ich mich 
 mit objektorientierter Programmierung (OOP) auseinandersetzen will. Am Liebsten 
 wäre mir eine Präsentation gewesen, aber im Endeffekt fand ich bei einer 
@@ -803,7 +801,8 @@ Die Klasse Person ist nach den folgenden Regeln zu erstellen:
   die Schaltfläche "Run all tests".... Wenn alles klappt, gibt es in der 
   Debug-Konsole keinerlei Fehlermeldungen, sondern nur Erfolgsmeldungen.
 
-![](https://raw.githubusercontent.com/AUSoftAndreas/students/dev/wiki/objektorientierung/testing_01.PNG)
+![](https://github.com/AUSoftAndreas/students/blob/dev/wiki/objektorientierung/testing_01.PNG?raw=true)
+
 
   Eines noch: Mir ist klar, dass diese Aufgabe am oberen Limit ist für die 
   meisten bzw. eigentlich darüber hinaus. Daher nutzt die Chance, Euch mit mir 
