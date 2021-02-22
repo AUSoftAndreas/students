@@ -1,5 +1,3 @@
-# Grundlegende Konzepte (immer noch)
-
 ### Sequenz
 Programmiert wird von oben nach unten. Das heißt: Im Prinzip wird eine Zeile 
 vom Computer abgearbeitet und danach ist die nächste Zeile dran.
@@ -152,6 +150,49 @@ Was dieses Beispiel zeigen soll: In x und y werden jeweils nur Verweise auf das
 Objekt gespeichert. Wenn wir dann eine Eigenschaft von x ändern, dann ändern wir 
 das zugeordnete Objekt.
 
+###### Variablen: Typ: Unfestgelegte Variablen und Type-Checks
+In den meisten Programmiersprachen gibt es darüber hinaus einen Variablentyp, 
+der alle anderen Variablentypen speichern kann. In Javscript ist quasi jede 
+Variable von diesem Typ. Das ergibt sich daraus, dass Javascript keine Typen 
+festlegt.
+
+In Dart gibt es hierfür den Variablentyp `dyanmic`. Er kann verwendet werden, 
+um einen Inhalt zu speichern, von dem wir nicht genau wissen, was der Inhalt 
+sein wird. Wir verlieren allerdings alle Vorteile, die ein strenges Typsystem 
+eigentlich mit sich bringt: Unsere IDE weiß nicht, welchen Variablentyp wir 
+vorliegen haben und kann uns nicht dabei helfen. Wenn wir beispielsweise 
+Datumsfunktionen auf den dynamischen Inhalt anwenden, dann weiß sie nicht, ob 
+das erlaubt ist oder nicht. Wir werden folglich mehr Fehler zur Laufzeit des 
+Programms bekommen, statt schon vorher im Editor.
+
+Da es den dynamischen Datentyp gibt, muss es auch Möglichkeiten geben, den Typ 
+dynamisch auszulesen. In Dart geschieht das über das Keyword `is`, wie in 
+folgendem Beispiel:
+
+```
+void meineFunktion(dynamic meinArgument) {
+  if (meinArgument is String) {
+    // Reagieren auf String
+  } else if (meinArgument is int) {
+    // Reagieren auf int
+  }
+}
+```
+
+In Javascript kann man Type-Checks über `typeof` realisieren. Dieser Befehl 
+gibt einen String zurück mit dem Namen des Variablentyps, den die Variable 
+zur Laufzeit des Programms gerade hat.
+
+```
+var a = 42;
+console.log(typeof a); // expected output: "number"
+a = 'blubber';
+console.log(typeof a); // expected output: "string"
+a = true;
+console.log(typeof a); // expected output: "boolean"
+console.log(typeof undeclaredVariable); // expected output: "undefined"
+```
+
 #### Variablen: Scope
 Eine Variable hat einen festgelegten Gültigkeitsbereich. Das heißt, dass die 
 Zuordnung von Variablenname zu Variableninhalt, einmal im Programm irgendwo 
@@ -178,57 +219,4 @@ Ihr sie mit Werten füllt.
 Die Zuweisung eines Wertes zu einer Variablen erfolgt in der Regel per `=`. Die 
 Variable steht auf der linken Seite und auf der rechten Seite des `=` steht der 
 Inhalt, der in die Variable gestellt wird.
-
-## Fallunterscheidungen
-Fallunterscheidungen sind ein wichtiger Teil jeden Codes. Wenn eine bestimmte 
-Bedingung gegeben ist, dann geschieht A, sonst unter Umständen B, ansonsten C. 
-Solche Fallunterscheidungen gibt es immer wieder.
-
-#### Fallunterscheidungen: If / Else
-Jede mir bekannte Sprache hat dieses Konstrukt. Es schreibt sich auch ähnlich 
-in jeder Sprache. Der folgende Code ist in Dart und kann in 90% aller Sprachen 
-ohne Änderung kopiert werden:
-```
-var x == 5;
-if (x < 5) {
-    log('Kleiner als 5');
-} else if (x < 10) {
-    log('Zwischen 5 und 9, inklusive');
-} else {
-    log('alle anderen Werte');
-}
-```
-Wichtig: Die Bedingung ist ein boolscher Wert, also etwas, das entweder true 
-oder false ist. Siehe weiter oben.
-
-#### Fallunterscheidungen: Switch Case
-Das ist eine andere, recht übersichtliche Methode, um Fallunterscheidungen zu 
-erzeugen. Im einleitenden Switch wird festgelegt, welche Variable den Wert 
-enthält, auf dessen Status wir reagieren sollen. Die Case-Einträge zeigen 
-potenzielle Fälle für den Inhalt dieser Bedingung.
-```
-var command = 'OPEN';
-switch (command) {
-  case 'OPEN':
-    executeOpen();
-    // ERROR: Missing break causes an exception to be thrown!!
-
-  case 'CLOSED': // Empty case falls through
-  case 'LOCKED':
-    executeClosed();
-    break;
-}
-```
-#### Ternary Operator
-In manchen Fällen bietet sich die Nutzung eines Operators ein, der 
-lange if-Blöcke einspart.
--  Grundsätzlicher Aufbau:
-    ```
-    bedingung ? wasPassiertWennTrue : was PassiertWennFalse;
-    ```
--  Ein Beispiel:
-    ```
-    var alter = 23;
-    log(alter < 19 ? 'Hallo, Du', 'Ich freue mich, Sie willkommen zu heißen)
-    ```
 
