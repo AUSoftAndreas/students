@@ -868,4 +868,4 @@ die Map erstmal gefüllt wurde, weil erst jetzt auch alle Blöcke schon vorhande
 Wir haben jetzt einen Zwischenstand erreicht, bei dem die Daten einigermßan passen, 
 aber die App kann noch nicht viel, wie folgender Screenshot beweist. :-)
 
-![](https://github.com/AUSoftAndreas/students/raw/dev/wiki/flutter/minesweeper.png)
+![](https://github.com/AUSoftAndreas/students/raw/dev/wiki/flutter/minesweeper01.png)
