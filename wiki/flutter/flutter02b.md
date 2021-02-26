@@ -269,7 +269,7 @@ definierten Test erkannt hat. Und wir können diesen (oder alle) Test laufen las
 Wenn wir es tun, erhalten wir die Info, dass die Tests erfolgreich durchlaufen 
 wurden.
 
-
+![](https://github.com/AUSoftAndreas/students/raw/dev/wiki/flutter/testing01.png)
 
 
 
