@@ -24,7 +24,7 @@ Im Prinzip: Im Explorer an eine beliebige Stelle navigieren, dort dann rechte Ma
 
 Und dann schreibt Ihr Eure ersten Zeilen, die ungefähr so aussehen könnten:
 
-```html
+```
 <!DOCTYPE html>
 <html lang="de">
 
@@ -56,7 +56,7 @@ Versucht zu verstehen, wie Euer Code zusammenhängt mit der Ausgabe. Der Code be
 Und all das findet sich auf der Seite wieder.
 
 Jetzt bauen wir den Code noch etwas aus:
-```html
+```
 <!DOCTYPE html>
 <html lang="de">
 

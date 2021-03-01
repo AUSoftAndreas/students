@@ -1,3 +1,37 @@
+<table>
+  <tr>
+    <td colspan="2">
+      <h2>Wichtiger Hinweis</h2>
+        Es ist unbedingt empfohlen, immer nebenher mit den Programmiersprachen zu spielen. Und da es oft ein wenig umständlich ist, 
+        für alles ein VSCode-Projekt aufzusetzen, empfehle ich wärmstens die folgenden Tools:<br/><br/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Sprache</strong>
+    </td>
+    <td>
+      <strong>Tool</strong>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Dart
+    </td>
+    <td>
+      <a href="https://dartpad.dev/">Dartpad</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Javascript & HTML & CSS
+    </td>
+    <td>
+      <a href="https://jsfiddle.net/">Fiddle</a>
+    </td>
+  </tr>
+</table>
+
 ## Fallunterscheidungen
 Fallunterscheidungen sind ein wichtiger Teil jeden Codes. Wenn eine bestimmte 
 Bedingung gegeben ist, dann geschieht A, sonst unter Umständen B, ansonsten C. 

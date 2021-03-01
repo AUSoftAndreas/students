@@ -1,3 +1,5 @@
+# Das Grundprinzip der OOP
+
 *Vorweg sei gesagt, dass ich lange mit der Form gerungen habe, in der ich mich 
 mit objektorientierter Programmierung (OOP) auseinandersetzen will. Am Liebsten 
 wäre mir eine Präsentation gewesen, aber im Endeffekt fand ich bei einer 
