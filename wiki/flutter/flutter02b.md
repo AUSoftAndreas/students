@@ -31,6 +31,20 @@ es sein, dass Ihr diese nicht notwendig habt, wenn Ihr Bloc oder Riverpod nutzt.
 stellen dann Methoden bereit, um aus jeder Ecke auf den State zuzugreifen und 
 sorgen dann dafür, dass State-Updates auch zu GUI-Updates führen.
 
+###### Kurz zum StatefulWidget
+Das `StatefulWidget` war eine für den sogenannten local State. Local State meint 
+den State eines GUI-Bildschirms. Es ging darum, dass Benutzereingaben ja zu 
+Änderungen dessen führen können, was auf genau dem Screen, auf dem der 
+Benutzer etwas getan hat, zu Änderungen führt. Beispielsweise habt Ihr einen 
+Button, mit dem der User zwischen Day und Night Mode der App switchen kann. 
+Natürlich wollt Ihr, dass ein Klick des Users dann dazu führt, dass auf einmal 
+alles dunkler ist. Also muss die GUI neu gerendert werden. Das war das 
+Aufgabengebiet des `StatefulWidget`. Ein Problem war aber, wenn das, was den 
+State ändert, von außen kommt. Bibliotheken wie bloc oder Riverpod nehmen einem 
+den Aufwand ab, das im Detail zu arrangieren, dass zum Beispiel irgendwelche 
+neuen Daten erstmal jedem GUI-Screen einzeln bekannt gemacht werden müssen.
+
+###### Zurück zum Thema
 Ausgehend von den Beschreibungen auf der [Riverpod](https://riverpod.dev/)-Homepage 
 habe ich erstmal das Riverpod-Package und das damit zusammenhängende "Flutter-Hooks"-
 Package in unser Projekt integriert. Das ist recht einfach und geschieht über die 
@@ -41,7 +55,7 @@ erdenklich einfach. Dazu musste einach die /pubspec.yaml geändert werden. In
 dieser Datei werden alle Libraries gelistet, die zum Einsatz kommen, zusammen 
 mit ihren Versionsnummern. Der interessante Abschnitt ist dieser:
 
-```
+```Yaml
 environment:
   sdk: ">=2.12.0-0 <3.0.0"
 
@@ -60,32 +74,32 @@ kann ich das zusammenfassen als:
 - Jede Variable wird normalerweise auf `null` initialisiert. Das ist der Wert, 
 den sie hat, wenn an ihr nicht einen anderen zuweist.
 - `null` ist insofern problematisch, als dass man mit diesem Wert vieles nicht 
-machen kann und daher pausenlos sogenannte null-Checks durchführen kann. Beispiele 
+machen kann und daher pausenlos sogenannte null-Checks durchführen muss. Beispiele 
 (Länge eines Strings bestimmen, aber im String steht `null` oder eine Rechenoperation 
 durchführen, aber eine der Zahlen ist `null`). Das ergibt jeweils eine Fehlermeldung 
-und deswegen gibt es überall Checks a la 'if(variable is null)`.
+und deswegen gibt es überall Checks a la `if(variable == null)`.
 - Das kaskadiert. Wenn Variablen herum gereicht werden zwischen zum Beispiel 
 Funktionen, dann muss jede Funktion erneut sicher gehen, dass die Variable nicht 
 `null` ist.
 - Deswegen unterscheidet Dart (ab 2.12) zwischen Variablen, die `null` als 
 Wert haben dürfen und solchen, die es nicht dürfen. Eine normal bezeichnete 
-Variable (String, int, double) darf kein `null` enthalten. Eine Variable, die 
-`null` enthalten kann, wird mit ? gekennzeichnet (String?, int?, double?).
+Variable (`String`, `int`, `double`) darf kein `null` enthalten. Eine Variable, die 
+`null` enthalten kann, wird mit ? gekennzeichnet (`String?`, `int?`, `double?`).
 - Das heißt, dann auch jede Variable initialisiert werden muss. Es gibt also 
 keine zeilen mehr a la 
-  ```
+  ```Dart
   int a;
   a = 3;
   ```
   In diesem Fall hätte `a` zumindest für einen kurzen Moment den Wert `null` und 
   das ist nicht zulässig.
 
-Also, durch den Eintrag in der pubspec.yaml sagte ich, dass ich mich den Regeln 
+Also, durch den Eintrag in der `pubspec.yaml` sagte ich, dass ich mich den Regeln 
 der null-Safety unterwerfen werde. Das war von Anfang an der Fall, weil man 
 ja schon im letzten Tutorial-Abschnitt sah, dass ich an manchen Stellen mit ? 
 hinter dem Variablentyp gearbeitet habe.
 
-Außerdem sage ich in der pubspec.yaml ebenfalls, dass zwei 
+Außerdem sage ich in der `pubspec.yaml` ebenfalls, dass zwei 
 Libraries / Packages installiert werden.
 
 - **hooks_riverpod** ist eine Variante des Riverpod-Packages, wo sich für mich der 
@@ -98,7 +112,7 @@ jeweils die neueste Version, die aber ebenfalls null-safe sein muss. Ihr
 könnt Euch auf [pub.dev](https://pub.dev/) ja auch einfach zum Spaß mal ansehen, 
 was es alles für Packages gibt.
 
-Ich hab zusätzlich die Datei /analysis_options.yaml aus unserem Tetris-Projekt 
+Ich hab zusätzlich die Datei `/analysis_options.yaml` aus unserem Tetris-Projekt 
 kopiert, damit ich auch die vielen Code-Verbesserungsvorschläge bekomme, Dokumentationen 
 nicht vergesse, etc.
 
@@ -109,7 +123,7 @@ mmöglichst weit oben im Widget-Tree muss man einen Provider-Scope definieren,
 also ab wo der State bekannt sein soll. Das geschieht einfach, indem MyApp, das
 ja die Oberklasse für alles ist, noch eine Stufe oben drauf bekommt.
 
-```
+```Dart
 void main() {
   runApp(
     ProviderScope(
@@ -123,10 +137,10 @@ Außerdem muss irgendwo festgelegt werden, welche Provider von State es gibt.
 Bei Riverpod braucht man dafür eine globale Variable, die eine Referenz auf 
 das das StateNotifier-Objekt enthält, das den State verwaltet. Dazu später mehr. 
 
-Dafür habe ich eine eigene Datei /lib/notifiers/_notifier.dart angelegt, die 
+Dafür habe ich eine eigene Datei `/lib/notifiers/_notifier.dart` angelegt, die 
 nur den folgenden Inhalt hat:
 
-```
+```Dart
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:minesweeper/notifiers/field_notifier.dart';
 
@@ -140,9 +154,9 @@ jetzt echt nicht so klingen, als müsse man das verstehen. Ich folge hier auch
 blind einem Tutorial. Es sind einfach Voraussetzungen, die man schaffen muss, 
 um das Riverpod-Package zu verwenden. :-)
 
-Aber im Kern gitl einfach, dass hier ein FieldNotifier-Objekt erstellt wird und 
+Aber im Kern gitl einfach, dass hier ein `FieldNotifier`-Objekt erstellt wird und 
 die Referenz darauf ist folglich immer abrufbar über die Variable. Das 
-FieldNotifier-Objekt bzw. die Klasse habe ich geschrieben, zu der kommen wir 
+`FieldNotifier`-Objekt bzw. die Klasse habe ich geschrieben, zu der kommen wir 
 also noch, aber die Grundidee ist einfach: Dieses Objekt wird, solange die 
 App läuft, unseren State verwalten. Sie nimmt Nachrichten aus dem GUI entgegen 
 und sie gewöhrt dem GUI Zugriff auf Informationen aus dem State der App (also 
@@ -156,7 +170,7 @@ Ja, jetzt haben wir so lange über Riverpod gesprochen und über StateNotifier a
 zentralen Hub für alle Interaktionen mit der GUI. Das muss ja eine wahnsinnig 
 komplexe Klasse sein, oder? Nunja, hier der Code:
 
-```
+```Dart
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:minesweeper/models/field.dart';
 
@@ -182,35 +196,35 @@ Klasse des zuständigen State-Objektes, was ja in unserem Fall Field ist.
 Wirklich geschrieben habe ich dann lediglich die erste Interaktionsmöglichkeit. 
 Man kann ein neues Spielfeld generieren mit der Methode create. Es lohnt sich, 
 kurz darüber zu sprechen, wie es funktioniert. Die Methode ruft offensichtlich 
-den Konstruktor Field.withArguments auf, über den wir schon redeten. Dieser 
+den Konstruktor `Field.withArguments` auf, über den wir schon redeten. Dieser 
 konstruiert ein komplettes Spielfeld. Und dieses neue Spielfeld wird dann 
 der Variablen state zugewiesen (bzw. dem Attribut). Aber wir haben doch gar kein 
-Attribut state definiert? Genau. Aber unsere Klasse hier extends StateNotifier. 
+Attribut state definiert? Genau. Aber unsere Klasse hier `extends StateNotifier`. 
 Und das heißt, dass sie alle Methoden und Attribute von StateNotifier erbt und 
 StateNotifier hat eben ein Attribut namens state, das wir somit auch haben.
 
 Ich habe keinerlei Ahnung, wie Riverpod intern funktioniert, aber die folgende 
 Erklärung ist für mich hinreichend sinnvoll:
-- StateNotifier hat eigentlich ein privates Feld _state, hat aber auch Setter 
+- `StateNotifier` hat eigentlich ein privates Feld `_state`, hat aber auch Setter 
 und Getter dafür definiert. Durch den Getter erhalten wir dann den Inhalt 
 dieses privaten Attributs. Wichtiger noch: Die GUI kann über uns den State 
 abfragen und ihn darstellen.
-- Was der State ist, haben wir definiert: Eine Instanz eines Field-Objektes. 
+- Was der State ist, haben wir definiert: Eine Instanz eines `Field`-Objektes. 
 Unser Spielfeld ist also der State.
-- Zudem wurde ein  Getter für _state implementiert. Das heißt wir schreiben 
-einen State in das Attribut _state (private) durch den Setter state (public). 
+- Zudem wurde ein  Setter für `_state` implementiert. Das heißt wir schreiben 
+einen State in das Attribut `_state` (private) durch den Setter `state` (public). 
 Und dieser Setter wurde so geschrieben, dass - wann immer wir ihn nutzen, also 
 einen neuen State setzen, er automatisch auch die GUI informiert, dass sie sich 
 jetzt neu zu bauen hat.
 - Um diese Details müssen wir uns aber nicht kümmern. Das DARF über unseren 
 Verstand hinausgehen, sowas selbst zu prorammieren. Wir müssen es nur 
 ungefähr verstehen und dann entsprechend mit dieser Technik umgehen. Merken wir 
-uns fürs erste nur: Wann immer wir dem Attribut state ( _state) einen neuen 
+uns fürs erste nur: Wann immer wir dem Attribut `state` einen neuen 
 Wert zuweisen, wird automatisch die GUI upgedated.
 
 Alle anderen Änderungen, die sich durch den Einbau von Riverpod ergaben, sind 
 gering. Im Wesentlichen führte es dazu, dass sowohl in main(), als auch im 
-StartScreen das oberste Widget jetzt ein HookWidget ist, kein StatelessWidget 
+StartScreen das oberste Widget jetzt ein `HookWidget` ist, kein `StatelessWidget` 
 mehr. HookWidgets sind eben auch ein Teil von Riverpod, und es wird darauf 
 hinauslaufen, dass durch diese Widgets Riverpod Zugriff auf die GUI bekommt.
 
@@ -221,11 +235,11 @@ IconButton in der Mitte. Wir haben aber schon komplexe Datenstrukturen geschrieb
 und dabei können uns Fehler unterlaufen sein. Deswegen generieren wir jetzt einige 
 Tests, um das richtige Verhalten unserer Daten sicherzustellen.
 
-Dazu existiert nun eine Datei lib/test/field_test.dart. Dart ist so aufgebaut, dass
+Dazu existiert nun eine Datei `/lib/test/field_test.dart`. Dart ist so aufgebaut, dass
 es alle Dateien mit _test am Ende des Dateinamens nicht als normalen Teil der 
 App betrachtet, sondern als separat ausführbare Tests. Schauen wir in den Code:
 
-```
+```Dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:minesweeper/notifiers/field_notifier.dart';
 
@@ -256,7 +270,7 @@ wird als anonyme Funktion definiert. Wie sieht unser Test aus?
 Wir instanziieren einen FieldNotifier, was ja normal unsere App auch macht. Wir 
 geben diesem den Befehl, ein neues Spiel zu kreieren  mit einer festgelegten 
 Anzahl an Minen und Feldern. Danach lesen wir den state aus. Das sollte jetzt 
-genau das instanziierte neue Spielfeld sein, da der state immer den aktuellen 
+genau das instanziierte neue Spielfeld sein, da der `state` immer den aktuellen 
 Stand produziert. Nun gehen wir durch die Map, die Positionen und Blöcke 
 miteinander verbindet und über die wir schon redeten. Wir gehen alle Blöcke 
 durch und zählen die Minen und Flags.

@@ -29,7 +29,7 @@ Code sofort löschte.
 
 Meine main.dart ist daher sehr spartanisch:
 
-```
+```Dart
 import 'package:flutter/material.dart';
 import 'package:minesweeper/ui/start_screen.dart';
 
@@ -89,7 +89,7 @@ Widget returnen? Exakt.
 Außerdem sagen wir, dass die erste Route (initialRoute), also der erste geladene 
 Screen der StartScreen sein soll. Sonst passiert hier nix. Kommen wir zum StartScreen:
 
-```
+```Dart
 import 'package:flutter/material.dart';
 
 /// Welcome Screen for the app
@@ -156,12 +156,12 @@ definieren KÖNNTET beim Aufruf. Testen wir das mal bei einem aus:
   einem Container eine Farbe geben, indem man das Attribut color setzt. Okay, tun 
   wir das.
   - Ändert
-  ```
+  ```Dart
       child: Container(
         child: Center(
   ```
   zu
-  ```
+  ```Dart
       child: Container(
         color: Colors.red,
         child: Center(
@@ -207,7 +207,7 @@ heißt ja zugleich, dass sie zu einem gültigen Variablentyp wird - und mir fiel
 viele Beispiele ein, wo es praktisch wäre, eine Position irgendwo zu speichern 
 oder zu übergeben. Gesagt, getan, eine Klasse `Position` war geschaffen:
 
-```
+```Dart
 import 'package:flutter/foundation.dart';
 
 /// Defines an absolute position (of a block)
@@ -243,7 +243,7 @@ class Position {
 Keine Sorge, das ist alles einfacher als es aussieht. Bereinigen wir es mal um 
 Kommentare und Annotationen, die ja funktional nicht wirklich notwendig sind.
 
-```
+```Dart
 import 'package:flutter/foundation.dart';
 
 @immutable
@@ -280,21 +280,29 @@ Gehen wir den Code durch:
   Sie definieren ein öffentliches Attrubut x bzw. y, das man von außen getten, also 
   lesen kann. Man bekommt dann (=>) den Inhalt der beiden privaten Attribute 
   _x bzw. _y ausgegeben. Einfach sich daran erinnern:
-  `int get x => _x;`  
-  ist nur eine andere Schreibweise für  
+  ```Dart
+  int get x => _x;
   ```
+  ist nur eine andere Schreibweise für  
+  ```Dart
   int get x {
     return _x;
   }
   ```
-- `Position(this._x, this._y);`
+- `const Position(this._x, this._y);`
   Eine Position wird zukünftig erstellt, indem man zum Beispiel einfach 
   Position(2,3) schreibt, damit beschreibt man eindeutig den Block in der 3. 
   Spalte von rechts und der 4. Zeile von unten (Indizes sind meistens 0-basiert, 
   also es gibt Zeile/Spalte 0). Es werden (da wir keine `[]` oder `{}` verwenden) 
   positionale Argumente benötigt, man kann auch keines weglassen. Das erste 
   Argument, was man verwendet, wird automatisch in _x geschrieben, das zweite 
-  automatisch in _y. `this` steht stellvertretend für "dieses Objekt".
+  automatisch in _y. `this` steht stellvertretend für "dieses Objekt". Das 
+  `const` wurde mir seitens Linter empfohlen. Generell ist es eine Art Zusicherung, 
+  dass das Objekt, wenn es denn von irgendwem erstellt wurde, sich nie wieder 
+  ändert. Und das ist ja hier der Fall. Eine Position bleibt immer genau diese 
+  Position. Der Inhalt der Position mag sich vielleicht verändern (also der 
+  Block, der da liegt), aber "3 Reihen von unten, 5 Blöcke von links" bleibt 
+  immer "3 Reihen von unten, 5 Blöcke von links".
 
 Und das ist schon das Ende für den Code, der wirklich klassenbezogen ist. Da ich 
 hin und wieder Log-Ausgaben produziere und ich da nicht jedesmal etwas schreiben will wie 
@@ -311,7 +319,7 @@ int, double) ist alles so eingerichtet, dass man Werte miteinander vergleichen k
 Bei den eigenen Klassen allerdings nicht. Man beachte folgenden Code (den Ihr 
 in einem Tool wie [DartPad](https://dartpad.dev/) gut nachvollziehen könnt):
 
-```
+```Dart
 class SimpleClass {
   String attribute;
   SimpleClass(this.attribute);
@@ -335,13 +343,13 @@ Wir werden oft Positionen vergleichen und dazu werden wir Positionen erzeugen
 und dann soll eben gelten, dass `Position(2,3) == Position(2,3)` ist.
 
 Daher overriden wir den Operator `==` mit dem nachfolgenden Code:
-```
+```Dart
 bool operator ==(Object o) => o is Position && o.x == _x && o.y == _y;
 ```
 Wir sagen dadurch: Eine Position(x/y) ist dann **gleich** einem anderen Objekt 
 (ganz allgemein), wenn auch das andere Objekt eine Position ist und wenn dann 
 auch x und y übereinstimmen mit unseren Attributen _x und _y (man beachte 
-die Unterstriche, denn die sind ja privat, wobei wir auch x und y schreiben könnte, 
+die Unterstriche, denn die sind ja privat, wobei wir auch x und y schreiben könnten, 
 denn unsere Klasse würde dann über den Getter ja auch _x und _y bekommen).
 
 Und schließlich gab es die Linter-Aufforderung, dass man nie nur den Equality-Operator 
@@ -400,7 +408,7 @@ Als nächstes habe ich mich dem Block zugewendet. An jeder Position sitzt
 später ein Block und der hat ebenfalls Informationen, die ihm zugeordnet sind. 
 Im ersten Schritt habe ich nur diese Informationen erstmal abgebildet.
 
-```
+```Dart
 import 'package:minesweeper/models/position.dart';
 
 /// Class representing a single block on the playing field of the game.
@@ -490,11 +498,12 @@ Konstruktor(1) : 2 {
 Wir können Werte direkt in der Argumentenliste(1) entgegennehmen (this.x bei der 
 Position zum Beispiel). Das klappt aber nicht, wenn die Attribute einen Unterstich 
 im Namen haben und benannte Attribute sind. Es würde klappen mit 
-Block(this.position, this.mine) .... Aber ich mag es häufig, wenn die Attribute mit 
-Namen aufgerufen werden müssen, also Block(position: Bla, mine: blun). Daher die 
+`Block(this._position, this._mine)` .... Aber ich mag es häufig, wenn die Attribute mit 
+Namen aufgerufen werden müssen, also `Block(position: Bla, mine: blun)`. Daher die 
 Schreibweise mit den geschweiften Klammern und dann geht dieses direkte Weiterreichen 
-per this nicht. Dann gibt es wie bei jeder Funktion die Möglichkeit, etwas im Body 
-zu tun (3). Dann ist das Objekt aber bereits erstellt. Es ist sozusagen der Code, 
+per `this` nicht. Dann gibt es wie bei jeder Funktion die Möglichkeit, etwas im Body 
+zu tun (3) und natürlich können wir hier auch etwas in die Attribute der Klasse 
+schreiben. Dann ist das Objekt aber bereits erstellt! Es ist sozusagen der Code, 
 der laufen soll, nachdem das Objekt instanziiert ist. Man kann hier beispielsweise 
 keine finale Variable mehr ändern, auch nicht wenn das die Erstbelegung ist, weil 
 die Variable **wurde** ja schon erstellt. Und dann gibt es eben den Block 2, der 
@@ -503,7 +512,10 @@ während das Objekt noch nicht existiert - und für die Attribute, deren Belegun
 nicht durch die Argumentenliste gehandhabt wurde.
 
 Wenn man übrigens keinen Body (3) benötigt, kann man stattdessen einfach ein 
-Semikolon setzen, was hier getan wurde.
+Semikolon setzen, was hier getan wurde. Auch darauf wird man aber vom Linter 
+hingewiesen, wenn man das stattdessen mit Klammern schreiben. An der Stelle können 
+wir mal festhalten, dass der Linter uns vieles von dem erheblich erleichtert, 
+was uns jetzt noch schwer vorkommen mag.
 
 So, und dann sind da noch zwei Methoden, die auch erst einen Ticken später 
 geschrieben wurden, als die Spielfeld-Klasse geschrieben war, und die tatsächlich 
@@ -519,7 +531,7 @@ der rechts, der unten rechts, der....", sondern das einmal zu tun und deswegen
 habe ich eine Methode geschrieben, die einfach eine Liste aller Nachbarblöcke 
 produziert. Das macht die anderen beiden Methoden schlanker. Gucken wir uns den 
 Code an:
-```
+```Dart
   List<Block> _neighbors(Map<Position, Block> map) {
     final list = <Block>[];
     if (map[Position(_position.x + 0, _position.y + 1)] != null) list.add(map[Position(_position.x + 0, _position.y + 1)]!);
@@ -534,11 +546,12 @@ Code an:
   }
 ```
 Zuerst zur Deklaration der Methode. Die Methode hat einen Rückgabewert vom Typ 
-List<Block>, also eine Liste von Blöcken. Sie heißt _neighbors. Der Unterstrich 
+`List<Block>`, also eine Liste von Blöcken. Sie heißt _neighbors. Der Unterstrich 
 macht sie wieder private, sie ist also nicht von außerhalb der Klasse aufzurufen. 
 Die Methode basiert darauf, dass man ihr eine map aller Positionen im Spiel 
 als Parameter übergibt. Eine Map ist eine Zuordnung von Werten zu anderen 
-Werten. Eine typische Liste sieht zum Beispiel so aus:
+Werten. In anderen Sprachen nennt man sowas einen assoziativen Array. 
+Eine typische Liste sieht zum Beispiel so aus:
 ```
  var a = {
   "name": "Andreas",
@@ -548,20 +561,26 @@ Werten. Eine typische Liste sieht zum Beispiel so aus:
 };
 ```
 Ich denke man erkennt das System. Das wäre eine Map<String, String>, weil jedem 
-String (links) ein anderer String (rechts) zugeordnet ist. Wenn man wissen sollte, 
-wie mein Hund heißt, müsste man dann folgendermaßen vorgehen:
-```
+String (links) ein anderer String (rechts) zugeordnet ist. Wenn man keinen genauen 
+Map-Type definiert, dann ist eine Map in Dart standardmäßig eine `Map<String, dynamic>`, 
+also eine Zuordnung eines Strings (sozusagen der Name der Eigenschaft) zu 
+irgendwas Unbestimmbarem (String, Zahl, etc.).
+
+Wenn man in meinem Beispiel wissen wollte, wie mein Hund heißt, müsste man dann 
+folgendermaßen vorgehen:
+```Dart
 var b = a["hund"];
 ```
 Man fragt also nach der Zuordnung zu dem String "hund" in der Map.
 
 Unsere Map, die wir bekommen werden, ist eine Map, wo jeder Position ihr 
-jeweiliger Block zugeordnet ist. Die kommt aus der Field-Klasse, insofern brauchen 
-wir uns nicht zu tief damit beschäftigen.
+jeweiliger Block zugeordnet ist. Die kommt aus der Field-Klasse, mit der wir uns 
+später beschäftigen.
 
-Dann wird eine Liste namens list als Variable definiert. Das kann man entweder 
-manchen wie bei der Methodendeklaration, also man könnte schreiben
-```
+Zurück zu unserem Code: Ws wird eine Liste namens list als Variable definiert. 
+Das kann man entweder manchen wie bei der Methodendeklaration, also man könnte 
+schreiben
+```Dart
 final List<Block> list = [];
 ```
 Dann meckert aber der Linter, weil er nicht will, dass wir den Typ hinschreiben. 
@@ -586,7 +605,7 @@ eine neue Liste und damit eine neue Referenz.
 
 #### Schritt B.4: Das Spielfeld
 
-```
+```Dart
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
@@ -698,6 +717,45 @@ Außerdem haben wir die Möglichkeit geschaffen, alle Feinheiten zu kontrolliere
 Dafür wurde ein Konstruktor geschaffen, mit dem man quasi alles bestimmen kann. Dieser 
 dient uns in der copyWith-Methode, zu der wir nun kommen.
 
+###### Exkurs: Mehere Konstruktoren in anderen Sprachen
+Der Dart-Weg mit den beliebig vielen Konstruktoren ist sehr smart und schön. 
+Prinzipiell ist es in den meisten Programmiersprachen so, dass es möglich ist, 
+mehrere Konstruktoren zu definieren. 
+
+Mal ein praktisches Beispiel: Angenommen wir wollen ein Schüler-Objekt in einer 
+Schulverwaltung instanziieren (weil wir dann einige Berechnungen vornehmen 
+wollen). Die Objekterstellung erfolgt an vielen Stellen (Programmteilen) und 
+an diesen Stellen stehen uns unterschiedliche Informationen zur Verfügung zur 
+Instanziierung. Beispiele:
+- Wir kennen alle Daten des Schülers, weil wir sie gerade eingegeben haben 
+(also in dem Formular zur Schülerdatenpflege). Wir können aus unseren Daten 
+den Schüler mit allen seinen Eigenschaften instanziieren.
+- Wir kennen nur seine ID und wollen, dass die Klasse sich automatisch alles 
+fehlende aus der Datenbank kennt.
+- Wir wollen eigentlich gar keinen spezifschen Schüler, sondern irgendeinen 
+Zufalls-gefüllten Test-Schüler instanziieren, für Tests anderswo oder während 
+der Programmierung.
+
+Viele Sprachen gehen aber den Weg der sogenannten Überladung von Konstruktoren. 
+Das heißt, dass man mehrere Konstruktoren definiert, die sich nur in ihren 
+Argumenten unterscheiden. Wir hätten also einen Konstruktor, der nur ein 
+int-Argument (die ID) annimmt und einen, der ganz viele Werte annimmmt und für 
+unseren Test-Schüler noch einen Konstruktor, der gar keine Argumente hat. Wenn 
+wir nun irgendwie eine Zeile haben wie 
+```Java
+Schueler a = new Schueler(); // JAVA-Syntax, nicht wundern :-)
+```
+dann leitet der Compiler aus der Tatsache, dass wir den Schueler-Konstruktor ohne 
+Argumente aufgerufen haben, ab, dass wir die Testdaten wollen und keinen 
+konkreten Schüler.
+
+Der Dart-Weg ist da deutlich lesbarer und flexibler:
+```Dart
+var a = Schueler.mockData();
+var b = Schueler.fromId(id);
+var c = Schueler({name: 'Andreas', ......});
+```
+
 ###### copyWith
 
 Diese Art der Funktion ist bei State Management mit sogenanntem immutable State 
@@ -724,7 +782,7 @@ dann führt das dazu, dass der Variablen state ein neuer Wert zugewiesen wird. D
 neue Wert ist eine Kopie des alten States, nur eben mit einem veränderten Attribut.
 
 Gucken wir uns die copyWith-Methode ruhig im Detail an:
-```
+```Dart
   Field copyWith({Map<Position, Block>? map, int? mines, int? numRows, int? numCols, bool? gameLost, bool? flagMode}) => Field._internal(
         map: map ?? this.map,
         mines: mines ?? this.mines,
@@ -736,8 +794,8 @@ Gucken wir uns die copyWith-Methode ruhig im Detail an:
 ```
 Die Fragezeichen bei den Argumenten sagen, dass hier auch `null`-Werte übergeben 
 werden können. Wenn wir kein Argument angeben, dann sind das jeweils `null`-Werte. 
-Unser Beispiel-Methodenaufruf mit dem gameLost-Attribut übergibt eben für jede 
-Variable den Wert `null`, bis auf die Variable gameLost, der gibt sie den Wert 
+Unser Beispiel-Methodenaufruf mit dem `gameLost`-Attribut übergibt eben für jede 
+Variable den Wert `null`, bis auf die Variable `gameLost`, der gibt sie den Wert 
 true.
 
 Die Funktion ist kurz und übergibt uns direkt per `=>` ihren Rückgabewert. Dieser 
@@ -762,7 +820,7 @@ Dummy-Kreationen zu Beginn geschuldet ist und auch nicht dem Konstruieren eines
 Objektes im Zuge des State Managament. Hier geht es wirklich um das Generieren 
 eines neuen Spielfelds. Lasst uns diesen Code erstmal erneut anschauen:
 
-```
+```Dart
   /// Constructs a game field for our game
   Field.withArguments({required this.numRows, required this.numCols, required this.mines})
       : gameLost = false,
@@ -793,10 +851,10 @@ eines neuen Spielfelds. Lasst uns diesen Code erstmal erneut anschauen:
 
 Gehen wir wieder alles von oben an durch:
 - Der Konstruktor (mit benannten Parametern) erfordert, dass man ihm sagt, wie 
-groß das Spielfeld sein soll (numRows, numCols). Außerdem muss man ihm sagen, 
+groß das Spielfeld sein soll (`numRows`, `numCols`). Außerdem muss man ihm sagen, 
 wie viele Minen das Spielfeld enthalten soll.
-- gameLost und flagMode werden dann im Nachgang auf false gesetzt, noch während 
-das Objekt nicht instanziiert wurde. Damit sind alle Attribute des Objekts 
+- `gameLost` und `flagMode` werden dann im Nachgang auf false gesetzt, noch während 
+das Objekt nicht instanziiert ist. Damit sind alle Attribute des Objekts 
 definiert, bevor der eigentliche Body des Konstruktors läuft, so wie das bei 
 `final`-Attributen in einer immutable-Klasse gefordert ist - bis auf die map. 
 Um die Map zu generieren, brauchen wir Informationen aus den anderen Feldern und 
@@ -816,12 +874,12 @@ am Anfang die Anzahl der Spalten mal die Anzahl der Zeilen ist).
 - Mit `final rng = math.Random();` instanziieren wir einen Zufallszahlengenerator, 
 der aus der math-Bibliothek von dart kommt (siehe Imports am Anfang der Datei). 
 Da die Math-Bibliothek auch eine Logarithmus-Funktion enthält und diese mit 
-log bezeichnet ist, ich aber ein Freund der log-Funktion (aus der developer-
+`log` bezeichnet ist, ich aber ein Freund der `log`-Funktion (aus der developer-
 Bibliothek von Dart) bin, die Logausgaben im Debugmodus produziert, sind 
-log-Befehle nicht mehr eindeutig definiert. Aus diesem Grund wurde beim 
-Import der math-Bibliothek diese mit dem Begriff math assoziiert und hier 
+`log`-Befehle nicht mehr eindeutig definiert. Aus diesem Grund wurde beim 
+Import der math-Bibliothek (oben gucken) diese mit dem Begriff `math` assoziiert und hier 
 wird dann jedem Verweis auf die Bibliothek ein `math.` vorangestellt. Das ist 
-einfach eine Reaktion auf eine Fehlermeldung, als ich auch log-Ausgaben in der 
+einfach eine Reaktion auf eine Fehlermeldung, als ich auch `log`-Ausgaben in der 
 Klasse hatte.
 - Danach starten zwei ineinander verschachtelte Schleifen. Die erste zählt 
 die Variable `col` hoch und produziert soviele Durchgänge wie es Spalten gibt.
@@ -844,7 +902,7 @@ wie es Reihen gibt.
     für eine nächste Mine 0%.
     - Das dient dazu, dass am Ende wirklich genau so viele Minen platziert wurden , 
     wie sie anfangs festgelegt wurden.
-  - Wir würfeln dann eine Zahl aus zwischen 0 und 99 (.nextInt(100) platziert nie 
+  - Wir würfeln dann eine Zahl aus zwischen 0 und 99 (`.nextInt(100)` erwürfelt nie 
   die 100, sondern eben 0 bis 99, zufällig).
   - Wenn wir kleiner würfeln als die Wahrscheinlichkeit für eine Mine ist, dann 
   wird im nächsten Feld eine Mine platziert.
