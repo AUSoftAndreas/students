@@ -4,7 +4,7 @@ An dieser Stelle ist es nicht ratsam, direkt weiter zu hasten. Sowohl HTML, als 
 ## Indentation
 Dieses englische Wort heißt einfach nur "Einrückung", also wenn ein Textabsatz am Anfang eingerückt ist, um Absatzwechsel besser kenntlich zu machen. Das steigert die Lesefreundlichkeit. Und ebenso ist es in (allen!) Programmiersprachen. Man vergleiche folgende HTML-Schnipsel:
 
-```
+```HTML
 <body>
 <div id="seitenkopf">
 <h1>Mein Kalenderblatt: 
@@ -25,7 +25,8 @@ Historische Ereignisse am 08.02.
 <ul>
 <li>Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge aus</li>
 <li>Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen</li>
-<li>Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus geht als erster Computerbug in die Geschichte ein.</li>
+<li>Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus geht als 
+erster Computerbug in die Geschichte ein.</li>
 </ul>
 </div>
 </body>
@@ -33,7 +34,7 @@ Historische Ereignisse am 08.02.
 
 und
 
-```
+```HTML
 <body>
     <div id="seitenkopf">
         <h1>Mein Kalenderblatt: 
@@ -52,9 +53,17 @@ und
             Historische Ereignisse am 08.02.
         </p>
         <ul>
-            <li>Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge aus</li>
-            <li>Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen</li>
-            <li>Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus geht als erster Computerbug in die Geschichte ein.</li>
+            <li>
+                Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge 
+                aus.
+            </li>
+            <li>
+                Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen
+            </li>
+            <li>
+                Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus 
+                geht als erster Computerbug in die Geschichte ein.
+            </li>
         </ul>
     </div>
 </body>
@@ -123,7 +132,7 @@ Also: Prinzipiell erstmal: Man kann das Debugging per VSCode starten per Menu:
 
 Relativ gut klappt es prinzipiell mit Chrome (mein Eindruck). Wenn die Standardvorgaben nicht klappen, dann müsst Ihr Euch in Eurem Project eine eigene Konfiguration einrichten per "Run" - "Add configuration" oder "Run - View configuration". Damit wird in Eurem Projekt ein Verzeichnis .vscode angelegt mit einer Datei "launch.json", in der die von Euch konfigurierten Debug-Möglichkeiten gespeichert werden. Mit dieser launch.json hab ich bei mir Edge und Firefox zum Laufen bekommen.
 
-```
+```JSON
 {
     "version": "0.2.0",
     "configurations": [
