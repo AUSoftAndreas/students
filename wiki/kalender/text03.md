@@ -17,7 +17,7 @@ Ihr habt jetzt eine optisch passable Seite für diesen Tag, bei mir der 08.02.20
 
 Ihr sollt meinen Code nicht kopieren, aber erreicht habe ich das mit folgender HTML:
 
-```
+```HTML
 <!DOCTYPE html>
 <html lang="de">
 
@@ -95,7 +95,10 @@ Ihr sollt meinen Code nicht kopieren, aber erreicht habe ich das mit folgender H
     </div>
     <div id="introtext">
         <p>
-            Der 08.02.2021 ist ein Montag und zwar der zweite Montag im Monat Februar des Jahres 2021. Dieser Monat hat 28 Tage. Der 08.02.2021 ist kein gesetzlicher Feiertag in Hessen. Der nächste gesetzliche Feiertag ist der 02.04.2021 (Karfreitag).
+            Der 08.02.2021 ist ein Montag und zwar der zweite Montag im Monat 
+            Februar des Jahres 2021. Dieser Monat hat 28 Tage. Der 08.02.2021 
+            ist kein gesetzlicher Feiertag in Hessen. Der nächste gesetzliche 
+            Feiertag ist der 02.04.2021 (Karfreitag).
         </p>
     </div>
     <div id="debug">
@@ -106,9 +109,17 @@ Ihr sollt meinen Code nicht kopieren, aber erreicht habe ich das mit folgender H
             Historische Ereignisse am 08.02.
         </p>
         <ul>
-            <li>Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge aus</li>
-            <li>Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen</li>
-            <li>Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus geht als erster Computerbug in die Geschichte ein.</li>
+            <li>
+                Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge 
+                aus.
+            </li>
+            <li>
+                Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen.
+            </li>
+            <li>
+                Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus 
+                geht als erster Computerbug in die Geschichte ein.
+            </li>
         </ul>
     </div>
 </body>
@@ -116,7 +127,7 @@ Ihr sollt meinen Code nicht kopieren, aber erreicht habe ich das mit folgender H
 ```
 
 und mit folgender CSS:
-```
+```CSS
 /*==============================================================================
 // BODY: Grundlegender Aufbau des Grids                                       //
 ==============================================================================*/
@@ -292,7 +303,7 @@ Wenn Ihr beim nächsten Laden Eurer Seite ein entsprechendes Fenster angezeigt b
 ## Grundstock für Eure Arbeit
 
 Folgende JS können wir als Grundstock nutzen:
-```
+```JS
 // Hier sagen wir dem Browser nur, dass erm nachdem die Seite vollständig geladen
 // wurde, die Funktion main(ohne Argumente) aufrufen soll.
 window.onload = function() {
@@ -308,7 +319,8 @@ function main() {
     strDebug += "datTodayGerman: " + datTodayGerman + "<br/>"; // Ausgabe
 
     // Wochentag
-    var weekday = datToday.getDay(); // ergibt den Tag der Woche als Zahl (von 0 = Sonntag bis 6 = Samstag)
+    var weekday = datToday.getDay(); // ergibt den Tag der Woche als Zahl 
+                                     // (von 0 = Sonntag bis 6 = Samstag)
     strDebug += "weekday: " + weekday + "<br/>"; // Ausgabe
     var weekdayGerman = getWeekdayGerman(weekday);
     strDebug += "weekdayGerman: " + weekdayGerman + "<br/>";
@@ -325,9 +337,12 @@ function main() {
 function getDateGerman(date) {
     day = date.getDate();
     month = date.getMonth();
-    month = month + 1; // Warum auch immer ... Javascript speichert Monate 0-basiert, also 0 = Januar, 11 = Dezember, daher hier Korrektur + 1
+    month = month + 1; // Warum auch immer ... Javascript speichert Monate 
+                       // 0-basiert, also 0 = Januar, 11 = Dezember, daher hier 
+                       // Korrektur + 1
     year = date.getFullYear();
-    // Man beachte: Man könnte hier nachfolgend nach dem if {} benutzen, aber da es sich nur um EINE nachfolgende Anweisung handelt, geht es auch so
+    // Man beachte: Man könnte hier nachfolgend nach dem if {} benutzen, aber da 
+    // es sich nur um EINE nachfolgende Anweisung handelt, geht es auch so 
     if (String(day).length == 1) day = "0" + day;
     // Nachfolgend alternativ MIT Klammern
     if (String(month).length == 1) {
@@ -373,7 +388,7 @@ Und nun versucht, den Code nachzuvollziehen. Ich mach das jetzt quasi zeilenweis
 * Nun finden wir in dem document (das ist die HTML-Seite, die im Browser angezeigt wird) das Element mit der id "debug". Dieses Element (das ist in meinem Code das gesamte DIV, das uns auf der Seite rot dargestellt wird) speichern wir in die Variable elDebug.
 * Wir prüfen, ob wir es wirklich gefunden haben: Wenn ja, dann ist elDebug **nicht null**.
 * Wenn wir also dieses DIV gefunden haben, packen wir den gesamten Inhalt von strDebug (also alle unsere gesammelten Debug-Texte) dort hinein. Das .innerHTML eines Elements ist der gesamte HTML-Code innerhalb dieses Elements. Zurückkommend zu meinem HTML-Code:
-```
+```HTML
     <div id="debug">
         Test
     </div>
@@ -399,14 +414,14 @@ Die Funktion erwartet ein Datum als Parameter (das steht nirgendwo, aber so ist 
 ## Und JETZT dynamisieren wir Infos auf der Webseite
 Guckt Euch die Webseite an. Ihr werdet sehen, dass, wenn alles richtig läuft, im Debug-Kasten korrekte Informationen zum heutigen Tag stehen. Dummerweise steht auf Eurer Seite ansonsten immer noch der alte Krempel. Schaut Euch im Inspektor an, was im Debug-Kasten steht: Dort steht das, was wir im Javascript reingeschrieben haben. Nicht mehr das, was laut HTML da stand. Folglich ist unsere Aufgabe, an anderen Stellen einen ähnlichen Effekt zu erzielen: Wir wollen die Altinformationen ersetzen durch neue Informationen. Damit das gelingen kann, müssen unsere Bereiche, wo zu aktualisierende Informationen stehen, auch per id direkt ansprechbar sein. Dafür ändere ich meinen HTML-Code an zuerst einmal zwei Stellen.
 
-```
+```HTML
     <div id="seitenkopf">
         <h1>Mein Kalenderblatt: <span id="field1">(Datum deutsch)</span></h1>
     </div>
 ```
 Statt einem Datum steht dort nun ein `<span></span>`-Element. Span ist ein HTML-Element, das für sich genommen gar nix tut. Es definiert halt einen Bereich in einem Text. Man könnte dann per CSS dafür sorgen, dass alle `<span class="bold">`-Bereiche fett geschrieben sind. Für sowas ist das eigentlich gut. Uns dient es dazu, die Bereiche zu markieren, deren Inhalte wir verändert wollen, denn nun haben diese Bereiche einen eindeutigen Bezeichner, die id "field1" in diesem Fall. Der Text "(Datum deutsch)" dient mir nur als Gedächtnisstütze, welche Info da rein soll - er wird ja eh überschrieben.
 
-```
+```HTML
     <div id="introtext">
         <p>
             Der 08.02.2021 ist ein <span id="field2">(Wochentag)</span> und zwar der zweite Montag im Monat Februar des Jahres 2021. Dieser Monat hat 28 Tage. Der 08.02.2021 ist kein gesetzlicher Feiertag in Hessen. Der nächste gesetzliche Feiertag ist
@@ -416,7 +431,7 @@ Statt einem Datum steht dort nun ein `<span></span>`-Element. Span ist ein HTML-
 ```
 Das ist meine zweite Ersetzung. Die span mit der id "field2" (wir erinnern uns: IDs müssen eindeutig sein). Wir brauchen also einmal den korrekt formatierten Wochentag und einmal das deutsch formatierte Datum, um die Ersetzungen vornehmen zu können. Und wie der Zufall es will: Beide Informationen liegen uns ja in unserem JS-Code schon vor. Wir ergänzen unsere JS-Datei um ein paar Zeilen und erhalten unsere main-Funktion. **Wohlgemerkt: Alle anderen Teile der JS-Datei bleiben unverändert)
 
-```
+```JS
 function main() {
     // Grund-Daten
     var strDebug = "";
@@ -446,7 +461,7 @@ function main() {
 ```
 
 Neu sind dabei nur die folgenden Zeilen:
-```
+```JS
     // Wir füllen die Informationen in den HTML-Code
     document.getElementById("field1").innerHTML = datTodayGerman;
     document.getElementById("field2").innerHTML = weekdayGerman;
@@ -455,7 +470,7 @@ An die beiden Stellen im Code werden also unsere berechneten Werte geschrieben u
 
 ### Kurzer Tipp zwischendurch
 Um mir die Übersicht zu erleichtern, hab ich mir noch folgende CSS-Regel eingerichtet:
-```
+```CSS
 span {
     background: lightcoral;
 }

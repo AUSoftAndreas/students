@@ -12,7 +12,7 @@ Wichtige Shortcuts ansonsten:
 ## Weiter im HTML
 Ihr hattet die Aufgabe, einen HTML-Code zu generieren, der auch einen Kalender anzeigt. Ich hab da mal ein Beispiel .... Bei den Sachen, die Ihr anders gemacht habt, versucht meine Lösung nachzuvollziehen... Sie muss nicht besser sein als Eure, nur für Euch nachvollziehbar.
 
-```
+```HTML
 <!DOCTYPE html>
 <html lang="de">
 
@@ -89,7 +89,10 @@ Ihr hattet die Aufgabe, einen HTML-Code zu generieren, der auch einen Kalender a
     </div>
     <div id="introtext">
         <p>
-            Der 08.02.2021 ist ein Montag und zwar der zweite Montag im Monat Februar des Jahres 2021. Dieser Monat hat 28 Tage. Der 08.02.2021 ist kein gesetzlicher Feiertag in Hessen. Der nächste gesetzliche Feiertag ist der 02.04.2021 (Karfreitag).
+            Der 08.02.2021 ist ein Montag und zwar der zweite Montag im Monat 
+            Februar des Jahres 2021. Dieser Monat hat 28 Tage. Der 08.02.2021 
+            ist kein gesetzlicher Feiertag in Hessen. Der nächste gesetzliche 
+            Feiertag ist der 02.04.2021 (Karfreitag).
         </p>
     </div>
     <div id="historie">
@@ -97,9 +100,17 @@ Ihr hattet die Aufgabe, einen HTML-Code zu generieren, der auch einen Kalender a
             Historische Ereignisse am 08.02.
         </p>
         <ul>
-            <li>Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge aus</li>
-            <li>Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen</li>
-            <li>Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus geht als erster Computerbug in die Geschichte ein.</li>
+            <li>
+                Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge 
+                aus.
+            </li>
+            <li>
+                Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen
+            </li>
+            <li>
+                Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus 
+                geht als erster Computerbug in die Geschichte ein.
+            </li>
         </ul>
     </div>
 </body>
@@ -107,19 +118,29 @@ Ihr hattet die Aufgabe, einen HTML-Code zu generieren, der auch einen Kalender a
 </html>
 ```
 
-Schaut Euch diese (oder Eure) Datei im Browser an und stellt fest: Das sieht immer noch doof aus, aber immerhin sind es Informationen. Das colspan-Attribut, das ich einmal verwende im Code, sagt "diese Zelle nimmt den Plat ein, den normalerweise X Zellen einnehmen". Dadurch erreiche ich, dass der Monat "Februar 2021" über die ganze Kalenderblatt-Breite dargestellt wird.
+Schaut Euch diese (oder Eure) Datei im Browser an und stellt fest: Das sieht 
+immer noch doof aus, aber immerhin sind es Informationen. Das colspan-Attribut, 
+das ich einmal verwende im Code, sagt "diese Zelle nimmt den Platz ein, den 
+normalerweise X Zellen einnehmen". Dadurch erreiche ich, dass der Monat "Februar 
+2021" über die ganze Kalenderblatt-Breite dargestellt wird.
 
 ## CSS
 
-CSS-Dateien enthalten Informationen darüber, wie HTML-Inhalte dargestellt werden. Zuerst binden wir eine CSS-Datei ein. Das geschieht im Header Eurer HTML-Datei, zum Beispiel über eine Zeile wie diese:
+CSS-Dateien enthalten Informationen darüber, wie HTML-Inhalte dargestellt werden. 
+Zuerst binden wir eine CSS-Datei ein. Das geschieht im Header Eurer HTML-Datei, 
+zum Beispiel über eine Zeile wie diese:
 
 `<link rel="stylesheet" type="text/css" href="style.css" />`
 
-Wir sagen also dem Dokument, dass unter einem bestimmten Link / einer Adresse eine CSS-Datei liegt namens style.css (und da wir keine Verzeichnisinformationen dazu schreiben, ist die Datei am gleichen Ort zu suchen wie die HTML-Datei) und dass diese für unser Dokument als Stylesheet zu werten ist.
+Wir sagen also dem Dokument, dass unter einem bestimmten Link / einer Adresse 
+eine CSS-Datei liegt namens style.css (und da wir keine Verzeichnisinformationen 
+dazu schreiben, ist die Datei am gleichen Ort zu suchen wie die HTML-Datei) und 
+dass diese für unser Dokument als Stylesheet zu werten ist.
 
-Nun erstellen wir auch im selben Verzeichnis eine Datei namens style.css und geben ihr für's erste den folgenden Inhalt.
+Nun erstellen wir auch im selben Verzeichnis eine Datei namens style.css und 
+geben ihr für's erste den folgenden Inhalt.
 
-```
+```CSS
 #seitenkopf {
     background: lime;
 }
@@ -146,7 +167,7 @@ Machen wir nun eine sinnvolle Änderung. Die Kalenderwoche wollen wir kleiner al
 ### Ankerpunkte im HTML
 CSS-Regeln können sich auf alles mögliche zielen. Sie können, wie gesehen, spezifisch auf ein einzelnes Element zielen, das über seine ID angesprochen wird. Sie können auch für bestimmte HTML-Tags gelten. Zum Beispiel:
 
-```
+```CSS
 // Macht alle Texte innerhalb von <p></p> Tags fett.
 p {
   font-weight: bold;
@@ -165,7 +186,7 @@ div#test p {
 
 Für unsere Zwecke ist das alles noch nicht ideal, denn wir wollen weder ein bestimmtes Element, aber auch nicht alle Elemente eines bestimmten Typs (zum Beispiel alle Tabellenzellen mit dem Tag td) mit unserer Regel zur Kursivschreibung anpassen, sondern nur bestimmte Tabellenzellen: Diejenige, die informationen zur Kalenderwoche enthalten. Für sowas gibt es Klassen in HTML/CSS. Wir können jedem, also auch mehreren Elementen (im Gegensatz zur ID) eine (oder gar mehrere Klassen) zuweisen. Dafür passt Ihr Euren Code an - und zwar für jede Tabellenzelle, die eine Angabe zur Kalenderwoche enthält. Beispiel:
 
-```
+```HTML
 <tr>
     <td class="kw">5</td>
     <td>1</td>
@@ -176,7 +197,7 @@ Die Zelle mit der 5 ist eine Zelle, die sich auf die KW 5 bezieht. Die Zelle mit
 
 Und dann ergänzen wir unsere CSS-Datei beispielsweise um folgenden Eintrag:
 
-```
+```CSS
 .kw {
     font-style: italic;
     font-size: smaller;

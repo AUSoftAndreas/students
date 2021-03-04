@@ -24,7 +24,7 @@ Im Prinzip: Im Explorer an eine beliebige Stelle navigieren, dort dann rechte Ma
 
 Und dann schreibt Ihr Eure ersten Zeilen, die ungefähr so aussehen könnten:
 
-```
+```HTML
 <!DOCTYPE html>
 <html lang="de">
 
@@ -56,7 +56,7 @@ Versucht zu verstehen, wie Euer Code zusammenhängt mit der Ausgabe. Der Code be
 Und all das findet sich auf der Seite wieder.
 
 Jetzt bauen wir den Code noch etwas aus:
-```
+```HTML
 <!DOCTYPE html>
 <html lang="de">
 
@@ -75,7 +75,10 @@ Jetzt bauen wir den Code noch etwas aus:
     </div>
     <div id="introtext">
         <p>
-            Der 08.02.2021 ist ein Montag und zwar der zweite Montag im Monat Februar des Jahres 2021. Dieser Monat hat 28 Tage. Der 08.02.2021 ist kein gesetzlicher Feiertag in Hessen. Der nächste gesetzliche Feiertag ist der 02.04.2021 (Karfreitag).
+            Der 08.02.2021 ist ein Montag und zwar der zweite Montag im Monat 
+            Februar des Jahres 2021. Dieser Monat hat 28 Tage. Der 08.02.2021 
+            ist kein gesetzlicher Feiertag in Hessen. Der nächste gesetzliche 
+            Feiertag ist der 02.04.2021 (Karfreitag).
         </p>
     </div>
     <div id="historie">
@@ -83,9 +86,17 @@ Jetzt bauen wir den Code noch etwas aus:
             Historische Ereignisse am 08.02.
         </p>
         <ul>
-            <li>Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge aus</li>
-            <li>Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen</li>
-            <li>Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus geht als erster Computerbug in die Geschichte ein.</li>
+            <li>
+                Vor 23 Jahren: Die Schwarzwaldklinik strahlt ihre 1000. Folge 
+                aus
+            </li>
+            <li>
+                Vor 40 Jahren: Ein Schrank fällt vom Dach in Wolfhagen
+            </li>
+            <li>
+                Vor 3020 Jahren: Ein Schnitzfehler auf einem sumerischen Abakus 
+                geht als erster Computerbug in die Geschichte ein.
+            </li>
         </ul>
     </div>
 </body>
