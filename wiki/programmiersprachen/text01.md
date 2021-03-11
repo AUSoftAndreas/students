@@ -1,37 +1,3 @@
-<table>
-  <tr>
-    <td colspan="2">
-      <h2>Wichtiger Hinweis</h2>
-        Es ist unbedingt empfohlen, immer nebenher mit den Programmiersprachen zu spielen. Und da es oft ein wenig umständlich ist, 
-        für alles ein VSCode-Projekt aufzusetzen, empfehle ich wärmstens die folgenden Tools:<br/><br/>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <strong>Sprache</strong>
-    </td>
-    <td>
-      <strong>Tool</strong>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      Dart
-    </td>
-    <td>
-      <a href="https://dartpad.dev/">Dartpad</a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      Javascript & HTML & CSS
-    </td>
-    <td>
-      <a href="https://jsfiddle.net/">Fiddle</a>
-    </td>
-  </tr>
-</table>
-
 # Einleitung
 
 *Hin und wieder wurde geäußert, dass Cheatsheets / Vokabellisten für Programmiersprachen 
@@ -45,7 +11,7 @@ Einführung in die Programmierung angehen. Zum Zeil wird sich das überschneiden
 Einführung in die objektorientierte Programmierung, aber es ist wohl nötig, ein 
 gewisses Verständnis für Programmierung zu gewinnen bzw. für dieses zu werben.
 
-##### Missverständnis 1: Eine Programmiersprache ist keine Sprache
+#### Missverständnis 1: Eine Programmiersprache ist keine Sprache
 
 Um in normalen Gesprächen als deutschsprechend ohne Einschränkung durchzugehen, braucht 
 man einen Wortschatz von rund 10.000 Worten, so habe ich mal gehört. In manchen Sprachen 
